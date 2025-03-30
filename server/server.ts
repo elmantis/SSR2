@@ -1,6 +1,6 @@
-import  express, { Request, Response, NextFunction, Errback } from "express";
+import express, { Request, Response, NextFunction, Errback } from "express";
 import admin, { ServiceAccount } from 'firebase-admin';
-import {serviceAccount} from './firebase_key'
+import { serviceAccount } from './firebase_key'
 import handleSSR from "./handleSSR";
 import homeRouter from './routes/home';
 import usersRouter from './routes/users'
@@ -29,7 +29,7 @@ app.use("/", userRouter)
 
 app.get("/*", handleSSR);
 
-app.use((err:any, _req:Request, res:Response, _next:NextFunction) => {
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err)
   res.status(500).send('There was an error on the server')
 })

@@ -3,11 +3,11 @@ type ApiRoutes = {
     user: {
         show: string;
     },
-    home:{
+    home: {
         show: string;
     },
     users: {
-        show:string
+        show: string
     }
 }
 

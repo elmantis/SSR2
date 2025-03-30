@@ -1,4 +1,3 @@
-export const FirebaseRefs: Record<string,string> = {
+export const FirebaseRefs: Record<string, string> = {
     users: 'users',
-    
 }

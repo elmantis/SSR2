@@ -13,7 +13,7 @@ const UserController: UserControllerProps = {
     const { id } = req.params;
     const data = await UsersModel.findOne(db, id);
 
-    res.status(200).json({data});
+    res.status(200).json({ data });
   },
   update: async (req: Request, res: Response): Promise<void> => {
     const { db } = req.app.locals;
@@ -22,7 +22,7 @@ const UserController: UserControllerProps = {
 
     const data = await UsersModel.update(db, id, user);
 
-    res.status(200).json({data});
+    res.status(200).json({ data });
   },
 };
 
