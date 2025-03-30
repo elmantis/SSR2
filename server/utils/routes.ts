@@ -1,7 +1,7 @@
 
 type ApiRoutes = {
     user: {
-        show?: string;
+        show: string;
     },
     home:{
         show: string;

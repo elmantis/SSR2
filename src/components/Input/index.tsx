@@ -17,7 +17,7 @@ const TextInput: React.FC<InputProps> = ({
     <div className="field">
       <label className="label">{fieldLabel}</label>
       <div className="control">
-        <input className="input" placeholder="Name" {...register(name)} />
+        <input className="input" placeholder={fieldLabel} {...register(name)} />
       </div>
       <p className="help is-danger">{errors[name]?.message}</p>
     </div>

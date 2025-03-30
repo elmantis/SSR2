@@ -7,8 +7,9 @@ type TableCellProps = {
 };
 
 const TableCell: React.FC<TableCellProps> = ({ text, _id }) => {
+  console.log(_id);
   return _id ? (
-    <Link to={`/user:${_id}`}>
+    <Link to={`/users/${_id}`}>
       <h2 className="subtitle">{text}</h2>
     </Link>
   ) : (

@@ -76,7 +76,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
         name="latitude"
         fieldLabel="latitude"
       />
-      <button type="submit">Create User</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };

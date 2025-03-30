@@ -2,14 +2,14 @@ import { Database } from "firebase-admin/lib/database/database"
 import { FirebaseRefs } from "../../utils/firebaseRefs";
 
 type User = {
-    id: string;
+    id?: string;
     name: string;
     zipCode: number;
     latitude: string;
     longitude: string;
 }
 const UsersModel = {
-    create: async (db:Database, data:any) => {
+    create: async (db:Database, data:User) => {
         const usersRef = db.ref(FirebaseRefs.users)
 
         return  await usersRef.push(data);
@@ -21,7 +21,24 @@ const UsersModel = {
         
          return Object.keys(users).map((key) => {
             return {id: key, ...users[key]}}) || []
-}
+},
+findOne: async (db:Database, userId: string):Promise<User> => {
+    const userRef = db.ref(`users/${userId}`)
+    const snapshot = await userRef.once('value');
+    const userData = snapshot.val()
+    
+    return userData || null
+},
+update: async (db:Database, userId: string, data: User):Promise<User>=> {
+    const userRef = db.ref(`users/${userId}`)
+    
+    await userRef.update(data);
+
+    const snapshot = await userRef.once('value');
+    const userData = snapshot.val()
+
+    return userData || null
+}, 
 }
 
 export default UsersModel

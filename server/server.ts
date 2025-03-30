@@ -4,6 +4,7 @@ import {serviceAccount} from './firebase_key'
 import handleSSR from "./handleSSR";
 import homeRouter from './routes/home';
 import usersRouter from './routes/users'
+import userRouter from './routes/user'
 
 const app = express();
 const port = 3000;
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", homeRouter);
 app.use("/", usersRouter);
+app.use("/", userRouter)
 
 
 app.get("/*", handleSSR);
