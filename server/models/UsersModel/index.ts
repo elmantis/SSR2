@@ -9,10 +9,14 @@ type User = {
     longitude: string;
 }
 const UsersModel = {
-    create: async (db:Database, data:User) => {
+    create: async (db:Database, data:User):Promise<User>  => {
         const usersRef = db.ref(FirebaseRefs.users)
+        const newUserkey =  await usersRef.push(data);       
+        const newUserRef = db.ref(`${FirebaseRefs.users}/${newUserkey.key}`)
+        const snapshot = await newUserRef.once('value');
+        const newUser = snapshot.val(); 
 
-        return  await usersRef.push(data);
+        return newUser
     },
     all: async(db:Database):Promise<User[]> => {
         const usersRef = db.ref(FirebaseRefs.users)
@@ -31,7 +35,7 @@ findOne: async (db:Database, userId: string):Promise<User> => {
 },
 update: async (db:Database, userId: string, data: User):Promise<User>=> {
     const userRef = db.ref(`users/${userId}`)
-    
+
     await userRef.update(data);
 
     const snapshot = await userRef.once('value');

@@ -19,15 +19,12 @@ const UsersController:UserControllerType ={
       
     },
     show: async (req:Request, res:Response): Promise<void> => {
-        const data:Payload = {
-            data: "Added new user"
-        } 
         const { db } = req.app.locals
         const user = req.body
         
-        await UsersModel.create(db, user)
+        const data = await UsersModel.create(db, user)
 
-        res.status(200).json(data)
+        res.status(200).json({data})
 
       },
 }

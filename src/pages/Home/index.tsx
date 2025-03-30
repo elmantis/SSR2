@@ -12,13 +12,17 @@ interface OutletContext {
 const Home = () => {
   const { userCoordinates } = useOutletContext<OutletContext>();
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
-    await fetch("/api/v1/users", {
+    const response = await fetch("/api/v1/users", {
       method: "post",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    const user = await response.json();
+
+    console.log(user);
   };
   return (
     <>
