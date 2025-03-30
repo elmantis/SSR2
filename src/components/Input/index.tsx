@@ -6,12 +6,14 @@ type InputProps = {
   register: UseFormRegister<any>;
   name: string;
   fieldLabel: string;
+  disabled?: boolean;
 };
 const TextInput: React.FC<InputProps> = ({
   register,
   errors,
   name,
   fieldLabel,
+  disabled,
 }) => {
   const inputId = `input-${name}`;
 
@@ -27,6 +29,7 @@ const TextInput: React.FC<InputProps> = ({
           id={inputId}
           placeholder={fieldLabel}
           {...register(name)}
+          disabled={disabled}
         />
       </div>
       <p className="help is-danger">{errors[name]?.message}</p>

@@ -32,9 +32,11 @@ const User = () => {
     setLoading(false);
   };
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
+    const payload =
+      data.zipCode !== user?.zipCode ? { ...data, ...userLocation } : data;
     const response = await fetch(`/api/v1/users/${params.id}`, {
       method: "PATCH",
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
       },
@@ -60,8 +62,8 @@ const User = () => {
           longitude: user?.longitude,
           timeZone: user?.timeZone,
         }}
-        userLocation={userLocation}
         onSubmit={handleSubmit}
+        user={user}
       />
     </>
   );

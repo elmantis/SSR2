@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -14,11 +14,7 @@ type CreateUserFormProps = {
     timeZone?: string;
   };
   onSubmit: (data: { name: string; zipCode: number }) => void;
-  userLocation: {
-    latitude?: string;
-    longitude?: string;
-    timeZone?: string;
-  };
+  user?: any;
 };
 
 const schema = yup.object({
@@ -34,25 +30,25 @@ const schema = yup.object({
 
 const CreateUserForm: React.FC<CreateUserFormProps> = ({
   initialValues,
-  userLocation,
+  user,
   onSubmit,
 }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setValue,
+    formState: { errors, isSubmitSuccessful },
+    reset,
   } = useForm({
     defaultValues: initialValues,
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
-  if (userLocation.latitude || userLocation.longitude) {
-    setValue("latitude", userLocation.latitude);
-    setValue("longitude", userLocation.longitude);
-    setValue("timeZone", userLocation.timeZone);
-  }
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset(user);
+    }
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,18 +69,21 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
         errors={errors}
         name="longitude"
         fieldLabel="Longitude"
+        disabled
       />
       <TextInput
         register={register}
         errors={errors}
         name="latitude"
         fieldLabel="latitude"
+        disabled
       />
       <TextInput
         register={register}
         errors={errors}
         name="timeZone"
         fieldLabel="Time Zone"
+        disabled
       />
       <button type="submit">Submit</button>
     </form>

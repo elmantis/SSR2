@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import CreateUserForm from "../../forms/CreateUserForm";
 
@@ -12,10 +12,12 @@ interface OutletContext {
 
 const Home = () => {
   const { userLocation } = useOutletContext<OutletContext>();
+  const [user, setUser] = useState({});
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
+    const newUser = { ...data, ...userLocation };
     const response = await fetch("/api/v1/users", {
       method: "post",
-      body: JSON.stringify(data),
+      body: JSON.stringify(newUser),
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,7 +25,7 @@ const Home = () => {
 
     const user = await response.json();
 
-    console.log(user);
+    setUser(user.data);
   };
   return (
     <>
@@ -35,7 +37,7 @@ const Home = () => {
           longitude: "",
           timeZone: "",
         }}
-        userLocation={userLocation}
+        user={user}
         onSubmit={handleSubmit}
       />
     </>
