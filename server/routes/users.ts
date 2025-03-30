@@ -6,6 +6,7 @@ const router = Router()
 
 router
   .route(apiRoutes?.users?.show)
+  .get(UsersController.index)
   .post(UsersController.show)
 
 export default router

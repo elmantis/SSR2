@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Outlet, useNavigate, Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 const MainLayout = () => {
   const [userCoordinates, setUserLocation] = useState({
@@ -23,17 +23,25 @@ const MainLayout = () => {
 
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-        </ul>
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div className="navbar-menu">
+          <div className="navbar-start">
+            <Link to="/" className="navbar-item">
+              Home
+            </Link>
+          </div>
+          <div className="navbar-start">
+            <Link to="/about" className="navbar-item">
+              About
+            </Link>
+          </div>
+          <div className="navbar-start">
+            <Link to="/users" className="navbar-item">
+              Users
+            </Link>
+          </div>
+        </div>
       </nav>
-      <button onClick={() => console.log("button clicked")}>Click</button>
       <div className="box">
         <Outlet context={{ userCoordinates: userCoordinates }} />
       </div>
