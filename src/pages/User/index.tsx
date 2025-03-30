@@ -33,7 +33,9 @@ const User = () => {
   };
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
     const payload =
-      data.zipCode !== user?.zipCode ? { ...data, ...userLocation } : data;
+      data.zipCode !== user?.zipCode
+        ? { ...data, ...userLocation }
+        : { ...user, ...data };
     const response = await fetch(`/api/v1/users/${params.id}`, {
       method: "PATCH",
       body: JSON.stringify(payload),
@@ -53,19 +55,21 @@ const User = () => {
   if (loading) return null;
 
   return (
-    <>
-      <CreateUserForm
-        initialValues={{
-          name: user?.name || "",
-          zipCode: user?.zipCode || 0,
-          latitude: user?.latitude,
-          longitude: user?.longitude,
-          timeZone: user?.timeZone,
-        }}
-        onSubmit={handleSubmit}
-        user={user}
-      />
-    </>
+    <div className="card">
+      <div className="content">
+        <CreateUserForm
+          initialValues={{
+            name: user?.name || "",
+            zipCode: user?.zipCode || 0,
+            latitude: user?.latitude,
+            longitude: user?.longitude,
+            timeZone: user?.timeZone,
+          }}
+          onSubmit={handleSubmit}
+          user={user}
+        />
+      </div>
+    </div>
   );
 };
 

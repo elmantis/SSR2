@@ -30,19 +30,21 @@ const Home = () => {
     setUser(user.data);
   };
   return (
-    <>
-      <CreateUserForm
-        initialValues={{
-          name: "",
-          zipCode: 0,
-          latitude: userLocation.latitude,
-          longitude: userLocation.longitude,
-          timeZone: userLocation.timeZone,
-        }}
-        user={user}
-        onSubmit={handleSubmit}
-      />
-    </>
+    <div className="card">
+      <div className="content">
+        <CreateUserForm
+          initialValues={{
+            name: "",
+            zipCode: 0,
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude,
+            timeZone: userLocation.timeZone,
+          }}
+          user={user}
+          onSubmit={handleSubmit}
+        />
+      </div>
+    </div>
   );
 };
 

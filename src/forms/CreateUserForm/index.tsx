@@ -91,7 +91,9 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
         fieldLabel="Time Zone"
         disabled
       />
-      <button type="submit">Submit</button>
+      <button className="button is-primary" type="submit">
+        Submit
+      </button>
     </form>
   );
 };
