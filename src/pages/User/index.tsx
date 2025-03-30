@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import CreateUserForm from "../../forms/CreateUserForm";
 import { useParams } from "react-router-dom";
+import { routes } from "../../routes/routes";
 
 type User = {
   id: string;
@@ -13,14 +14,12 @@ type User = {
 };
 
 interface OutletContext {
-  userLocation: {
-    latitude: string;
-    longitude: string;
-    timeZone: string;
-  };
+  OPEN_WEATHER_API_KEY: string;
+  TIME_DB_KEY: string;
 }
 const User = () => {
-  const { userLocation } = useOutletContext<OutletContext>();
+  const { OPEN_WEATHER_API_KEY, TIME_DB_KEY } =
+    useOutletContext<OutletContext>();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>();
   const params = useParams();
@@ -34,7 +33,7 @@ const User = () => {
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
     const payload =
       data.zipCode !== user?.zipCode
-        ? { ...data, ...userLocation }
+        ? { ...data, ...(await handleLocation(data.zipCode)) }
         : { ...user, ...data };
     const response = await fetch(`/api/v1/users/${params.id}`, {
       method: "PATCH",
@@ -46,6 +45,17 @@ const User = () => {
     const updatedUser = await response.json();
 
     setUser(updatedUser.data);
+  };
+  const handleLocation = async (zipCode: number) => {
+    const getCoordinates = await fetch(
+      routes.openWeatherLocation(`${zipCode}`, OPEN_WEATHER_API_KEY)
+    );
+    const coordinatesData = await getCoordinates.json();
+    const { lat, lon } = coordinatesData;
+    const getTimeZone = await fetch(routes.timeZoneDB(lat, lon, TIME_DB_KEY));
+    const tzData = await getTimeZone.json();
+
+    return { latitude: lat, longitude: lon, timeZone: tzData.zoneName };
   };
 
   useEffect(() => {

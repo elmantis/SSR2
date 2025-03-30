@@ -1,21 +1,17 @@
 import React, { use, useEffect } from "react";
-import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import Users from "./pages/Users";
-import User from "./pages/User";
-import MainLayout from "./layout/MainLayout";
+
+declare global {
+  interface Window {
+    __INITIAL_DATA__?: any;
+  }
+}
+import AppRoutes from "./routes";
 
 const App: React.FC = () => {
-  return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/:id" element={<User />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Route>
-    </Routes>
-  );
+  const initialData =
+    typeof window !== "undefined" ? window.__INITIAL_DATA__ : {};
+
+  return <AppRoutes {...initialData} />;
 };
 
 export default App;

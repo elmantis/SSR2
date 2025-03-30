@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import CreateUserForm from "../../forms/CreateUserForm";
+import { routes } from "../../routes/routes";
 
 interface OutletContext {
-  userLocation: {
-    latitude: string;
-    longitude: string;
-    timeZone: string;
-  };
+  OPEN_WEATHER_API_KEY: string;
+  TIME_DB_KEY: string;
 }
 
 const Home = () => {
-  const { userLocation } = useOutletContext<OutletContext>();
+  const { OPEN_WEATHER_API_KEY, TIME_DB_KEY } =
+    useOutletContext<OutletContext>();
   const [user, setUser] = useState({});
-  const handleSubmit = async (data: { name: string; zipCode: number }) => {
-    const { latitude, longitude, timeZone } = userLocation;
-    const newUser = { ...data, latitude, longitude, timeZone };
 
+  const handleSubmit = async (data: { name: string; zipCode: number }) => {
+    const { latitude, longitude, timeZone } = await handleLocation(
+      data.zipCode
+    );
+    const newUser = { ...data, latitude, longitude, timeZone };
     const response = await fetch("/api/v1/users", {
       method: "post",
       body: JSON.stringify(newUser),
@@ -29,6 +30,17 @@ const Home = () => {
 
     setUser(user.data);
   };
+  const handleLocation = async (zipCode: number) => {
+    const getCoordinates = await fetch(
+      routes.openWeatherLocation(`${zipCode}`, OPEN_WEATHER_API_KEY)
+    );
+    const coordinatesData = await getCoordinates.json();
+    const { lat, lon } = coordinatesData;
+    const getTimeZone = await fetch(routes.timeZoneDB(lat, lon, TIME_DB_KEY));
+    const tzData = await getTimeZone.json();
+
+    return { latitude: lat, longitude: lon, timeZone: tzData.zoneName };
+  };
   return (
     <div className="card">
       <div className="content">
@@ -36,9 +48,9 @@ const Home = () => {
           initialValues={{
             name: "",
             zipCode: 0,
-            latitude: userLocation.latitude,
-            longitude: userLocation.longitude,
-            timeZone: userLocation.timeZone,
+            latitude: "",
+            longitude: "",
+            timeZone: "",
           }}
           user={user}
           onSubmit={handleSubmit}
