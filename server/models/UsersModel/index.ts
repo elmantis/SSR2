@@ -5,7 +5,7 @@ const UsersModel = {
     create: async (db:Database, data:any) => {
         const userRef = db.ref(FirebaseRefs.users)
 
-        return  await userRef.set(data);
+        return  await userRef.push(data);
     }
 }
 
