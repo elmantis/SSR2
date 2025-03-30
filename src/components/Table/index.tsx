@@ -7,6 +7,7 @@ type User = {
   longitude: string;
   zipCode: number;
   name: string;
+  timeZone: string;
 };
 
 type TableProps = {
@@ -28,6 +29,9 @@ const Table: React.FC<TableProps> = ({ users }) => {
           </th>
           <th>
             <abbr title="Longitude">Longitude</abbr>
+          </th>
+          <th>
+            <abbr title="Time Zone">Time Zone</abbr>
           </th>
         </tr>
       </thead>

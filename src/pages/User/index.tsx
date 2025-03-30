@@ -9,16 +9,18 @@ type User = {
   longitude: string;
   zipCode: number;
   name: string;
+  timeZone: string;
 };
 
 interface OutletContext {
-  userCoordinates: {
+  userLocation: {
     latitude: string;
     longitude: string;
+    timeZone: string;
   };
 }
 const User = () => {
-  const { userCoordinates } = useOutletContext<OutletContext>();
+  const { userLocation } = useOutletContext<OutletContext>();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>();
   const params = useParams();
@@ -56,8 +58,9 @@ const User = () => {
           zipCode: user?.zipCode || 0,
           latitude: user?.latitude,
           longitude: user?.longitude,
+          timeZone: user?.timeZone,
         }}
-        coordinateValues={userCoordinates}
+        userLocation={userLocation}
         onSubmit={handleSubmit}
       />
     </>

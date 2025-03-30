@@ -7,6 +7,7 @@ type TableRowProps = {
   longitude: string;
   zipCode: number;
   name: string;
+  timeZone: string;
 };
 
 const TableRow: React.FC<TableRowProps> = ({
@@ -15,6 +16,7 @@ const TableRow: React.FC<TableRowProps> = ({
   longitude,
   name,
   zipCode,
+  timeZone,
 }) => {
   return (
     <tr>
@@ -29,6 +31,9 @@ const TableRow: React.FC<TableRowProps> = ({
       </td>
       <td>
         <TableCell text={longitude} />
+      </td>
+      <td>
+        <TableCell text={timeZone} />
       </td>
     </tr>
   );

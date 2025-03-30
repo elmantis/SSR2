@@ -11,11 +11,13 @@ type CreateUserFormProps = {
     zipCode: number;
     latitude?: string;
     longitude?: string;
+    timeZone?: string;
   };
   onSubmit: (data: { name: string; zipCode: number }) => void;
-  coordinateValues: {
+  userLocation: {
     latitude?: string;
     longitude?: string;
+    timeZone?: string;
   };
 };
 
@@ -27,11 +29,12 @@ const schema = yup.object({
   zipCode: yup.number().positive().integer().required(),
   latitude: yup.string(),
   longitude: yup.string(),
+  timeZone: yup.string(),
 });
 
 const CreateUserForm: React.FC<CreateUserFormProps> = ({
   initialValues,
-  coordinateValues,
+  userLocation,
   onSubmit,
 }) => {
   const {
@@ -45,9 +48,10 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
     mode: "onChange",
   });
 
-  if (coordinateValues.latitude || coordinateValues.longitude) {
-    setValue("latitude", coordinateValues.latitude);
-    setValue("longitude", coordinateValues.longitude);
+  if (userLocation.latitude || userLocation.longitude) {
+    setValue("latitude", userLocation.latitude);
+    setValue("longitude", userLocation.longitude);
+    setValue("timeZone", userLocation.timeZone);
   }
 
   return (
@@ -75,6 +79,12 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
         errors={errors}
         name="latitude"
         fieldLabel="latitude"
+      />
+      <TextInput
+        register={register}
+        errors={errors}
+        name="timeZone"
+        fieldLabel="Time Zone"
       />
       <button type="submit">Submit</button>
     </form>

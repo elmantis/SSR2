@@ -3,14 +3,15 @@ import { useOutletContext } from "react-router-dom";
 import CreateUserForm from "../../forms/CreateUserForm";
 
 interface OutletContext {
-  userCoordinates: {
+  userLocation: {
     latitude: string;
     longitude: string;
+    timeZone: string;
   };
 }
 
 const Home = () => {
-  const { userCoordinates } = useOutletContext<OutletContext>();
+  const { userLocation } = useOutletContext<OutletContext>();
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
     const response = await fetch("/api/v1/users", {
       method: "post",
@@ -32,8 +33,9 @@ const Home = () => {
           zipCode: 11111,
           latitude: "",
           longitude: "",
+          timeZone: "",
         }}
-        coordinateValues={userCoordinates}
+        userLocation={userLocation}
         onSubmit={handleSubmit}
       />
     </>

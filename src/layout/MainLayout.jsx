@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 const MainLayout = () => {
-  const [userCoordinates, setUserLocation] = useState({
+  const [userLocation, setUserLocation] = useState({
     latitude: "",
     longitude: "",
+    timeZone: "",
   });
 
   useEffect(() => {
@@ -12,7 +13,8 @@ const MainLayout = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setUserLocation({ latitude, longitude });
+          const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          setUserLocation({ latitude, longitude, timeZone });
         },
         (error) => {
           console.error("Error getting user location:", error);
@@ -43,7 +45,7 @@ const MainLayout = () => {
         </div>
       </nav>
       <div className="box">
-        <Outlet context={{ userCoordinates: userCoordinates }} />
+        <Outlet context={{ userLocation: userLocation }} />
       </div>
     </>
   );

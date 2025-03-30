@@ -13,11 +13,21 @@ const TextInput: React.FC<InputProps> = ({
   name,
   fieldLabel,
 }) => {
+  const inputId = `input-${name}`;
+
   return (
     <div className="field">
-      <label className="label">{fieldLabel}</label>
+      <label className="label" htmlFor={inputId}>
+        {fieldLabel}
+      </label>
       <div className="control">
-        <input className="input" placeholder={fieldLabel} {...register(name)} />
+        <input
+          className="input"
+          type="text"
+          id={inputId}
+          placeholder={fieldLabel}
+          {...register(name)}
+        />
       </div>
       <p className="help is-danger">{errors[name]?.message}</p>
     </div>

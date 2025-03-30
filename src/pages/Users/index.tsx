@@ -7,6 +7,7 @@ type User = {
   longitude: string;
   zipCode: number;
   name: string;
+  timeZone: string;
 };
 
 const Users = () => {
