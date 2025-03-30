@@ -30,18 +30,16 @@ const User = () => {
     setLoading(false);
   };
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
-    console.log("Form submitted with data:", data);
-
     const response = await fetch(`/api/v1/users/${params.id}`, {
       method: "PATCH",
-      body: JSON.stringify({ data }),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const updatedUser = await response.json();
 
-    console.log(updatedUser);
+    setUser(updatedUser.data);
   };
 
   useEffect(() => {

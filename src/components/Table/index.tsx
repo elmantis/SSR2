@@ -13,7 +13,6 @@ type TableProps = {
   users: User[];
 };
 const Table: React.FC<TableProps> = ({ users }) => {
-  console.log(users);
   return (
     <table className="table">
       <thead>

@@ -18,8 +18,8 @@ const UserController: UserControllerProps = {
   update: async (req: Request, res: Response): Promise<void> => {
     const { db } = req.app.locals;
     const { id } = req.params;
-    const user = req.body.data
-    console.log(req.params, req.body, 'THIS IS THE THING')
+    const user = req.body
+
     const data = await UsersModel.update(db, id, user);
 
     res.status(200).json({data});
