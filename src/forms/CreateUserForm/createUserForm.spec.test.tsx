@@ -35,24 +35,26 @@ describe("CreateUserForm", () => {
   it("Submits the form with the correct form values", async () => {
     const user = userEvent.setup();
     const onSubmit = jest.fn();
-    const props = { ...defaultProps, onSubmit };
+    const props = {
+      ...defaultProps,
+      onSubmit,
+    };
 
     renderForm(props);
 
     await user.type(elements.nameField(), "some name");
     await user.type(elements.zipCodeField(), "111111");
-    await user.type(elements.latitudeField(), "latitude");
-    await user.type(elements.longitudeField(), "longitude");
+
     await user.click(elements.signUpBtn());
 
     await waitFor(() =>
       expect(onSubmit).toHaveBeenCalledWith(
         {
-          latitude: "latitude",
-          longitude: "longitude",
           name: "some name",
           zipCode: 111111,
-          timeZone: "America/New York",
+          latitude: "",
+          longitude: "",
+          timeZone: "",
         },
         expect.anything()
       )

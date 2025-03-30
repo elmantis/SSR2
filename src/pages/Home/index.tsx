@@ -14,7 +14,9 @@ const Home = () => {
   const { userLocation } = useOutletContext<OutletContext>();
   const [user, setUser] = useState({});
   const handleSubmit = async (data: { name: string; zipCode: number }) => {
-    const newUser = { ...data, ...userLocation };
+    const { latitude, longitude, timeZone } = userLocation;
+    const newUser = { ...data, latitude, longitude, timeZone };
+
     const response = await fetch("/api/v1/users", {
       method: "post",
       body: JSON.stringify(newUser),
@@ -32,10 +34,10 @@ const Home = () => {
       <CreateUserForm
         initialValues={{
           name: "",
-          zipCode: 11111,
-          latitude: "",
-          longitude: "",
-          timeZone: "",
+          zipCode: 0,
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
+          timeZone: userLocation.timeZone,
         }}
         user={user}
         onSubmit={handleSubmit}

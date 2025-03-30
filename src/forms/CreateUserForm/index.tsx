@@ -13,7 +13,13 @@ type CreateUserFormProps = {
     longitude?: string;
     timeZone?: string;
   };
-  onSubmit: (data: { name: string; zipCode: number }) => void;
+  onSubmit: (data: {
+    name: string;
+    zipCode: number;
+    latitude?: string;
+    longitude?: string;
+    timeZone?: string;
+  }) => void;
   user?: any;
 };
 
