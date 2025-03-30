@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction, Errback } from "express";
 import dotenv from 'dotenv'
 import path from "path";
-import fs from 'fs'
 import admin, { ServiceAccount } from 'firebase-admin';
 import { serviceAccount } from './firebase_key'
 import handleSSR from "./handleSSR";
