@@ -31,13 +31,6 @@ const MainLayout = () => {
             <Link to="/" className="navbar-item">
               Home
             </Link>
-          </div>
-          <div className="navbar-start">
-            <Link to="/about" className="navbar-item">
-              About
-            </Link>
-          </div>
-          <div className="navbar-start">
             <Link to="/users" className="navbar-item">
               Users
             </Link>

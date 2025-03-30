@@ -4,31 +4,7 @@ import { Request, Response } from "express";
 import { StaticRouter } from "react-router-dom";
 import App from "../src/App";
 
-interface SSRContext {
-  url?: string;
-  dataFromServer?: any;
-}
-
-// Assume this function fetches your data (replace with your actual logic)
-async function getDataFromServer(): Promise<any> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ message: "Data fetched on the server!" });
-    }, 500);
-  });
-}
-
 export default async function handleSSR(req: Request, res: Response) {
-  const context: SSRContext = {};
-  let serverData: any = null;
-
-  try {
-    serverData = await getDataFromServer();
-    context.dataFromServer = serverData;
-  } catch (error) {
-    console.error("Error fetching data on server:", error);
-  }
-
   res.setHeader("content-type", "text/html");
 
   const stream = renderToPipeableStream(
