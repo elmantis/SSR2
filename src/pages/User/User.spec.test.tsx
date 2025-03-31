@@ -1,4 +1,3 @@
-// Home.test.js
 import React from "react";
 import {
   render,
@@ -78,7 +77,6 @@ describe("User", () => {
   });
 
   it("updates user data when form is submitted and zip code is different", async () => {
-    const thing = jest.spyOn(global, "fetch");
     const updatedUser = {
       name: "some name",
       zipCode: 11111,
