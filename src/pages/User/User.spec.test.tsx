@@ -120,7 +120,6 @@ describe("User", () => {
     const mockChildButton = screen.getByTestId("submitButton");
     fireEvent.click(mockChildButton);
     await waitFor(() => expect(mockFetch).toHaveBeenCalledTimes(4));
-    expect(thing).toHaveBeenCalled;
     expect(mockFetch).toHaveBeenNthCalledWith(1, "/api/v1/users/123");
     expect(mockFetch).toHaveBeenNthCalledWith(
       2,
