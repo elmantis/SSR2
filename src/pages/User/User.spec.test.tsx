@@ -12,7 +12,6 @@ import CreateUserForm from "../../forms/CreateUserForm";
 
 import "@testing-library/jest-dom";
 
-console.log(globalThis.fetch);
 //Mock react-router-dom
 jest.mock("react-router-dom", () => ({
   useOutletContext: () => ({
@@ -131,6 +130,50 @@ describe("User", () => {
     );
     expect(mockFetch).toHaveBeenNthCalledWith(4, "/api/v1/users/123", {
       body: JSON.stringify(updatedUser),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+    });
+  });
+  it("will not update coordinates if the zip code is the same", async () => {
+    const updateUserNameNoZipCode = {
+      name: "",
+      zipCode: 11111,
+      latitude: "34.0522",
+      longitude: "-118.2437",
+      timeZone: "America/Los_Angeles",
+    };
+
+    mockFetch.mockResolvedValueOnce({
+      json: async () => ({
+        data: {
+          id: "123",
+          name: "some name",
+          zipCode: 11111,
+          latitude: "34.0522",
+          longitude: "-118.2437",
+          timeZone: "America/Los_Angeles",
+        },
+      }),
+    });
+
+    await act(async () => render(<User />));
+
+    const mockChildButton = screen.getByTestId("submitButton");
+    fireEvent.click(mockChildButton);
+
+    await waitFor(() => expect(mockFetch).toHaveBeenCalledTimes(2));
+
+    expect(mockFetch).not.toHaveBeenLastCalledWith(
+      "http://api.openweathermap.org/geo/1.0/zip?zip=11111&appid=wApiKey"
+    );
+    expect(mockFetch).not.toHaveBeenCalledWith(
+      "http://api.timezonedb.com/v2.1/get-time-zone?key=timeDbKey&format=json&by=position&lat=34.0522&lng=-118.2437"
+    );
+    expect(mockFetch).toHaveBeenNthCalledWith(1, "/api/v1/users/123");
+    expect(mockFetch).toHaveBeenNthCalledWith(2, "/api/v1/users/123", {
+      body: JSON.stringify(updateUserNameNoZipCode),
       headers: {
         "Content-Type": "application/json",
       },
