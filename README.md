@@ -21,7 +21,7 @@ This is an SSR React application that creates a user from user input data, using
 
 - Create a user
 - Update a user
-- Diring a user update if the zip code changes then update timezone and coordinates
+- During a user update if the zip code changes then update timezone and coordinates
 - Server uses pipeable stream to Client
 - Form Input validation in client
 - Validation on server
@@ -49,5 +49,5 @@ npm run test:server
 For UI tests use this commaand
 
 ```sh
-npm run test:server
+npm run test:react
 ```
