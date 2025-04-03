@@ -19,8 +19,8 @@ const usersSchema = baseSchema({
 })
 
 router
-  .route(apiRoutes?.users?.show)
+  .route(apiRoutes?.users)
   .get(UsersController.index)
-  .post(validateRequest(usersSchema), UsersController.show)
+  .post(validateRequest(usersSchema), UsersController.create)
 
 export default router

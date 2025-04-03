@@ -24,7 +24,7 @@ const getUserSchema = baseSchema({
   })
 })
 router
-  .route(apiRoutes?.user?.show)
+  .route(apiRoutes?.user)
   .get(validateRequest(getUserSchema), UserController.show)
   .patch(validateRequest(updateUserSchema), UserController.update)
 

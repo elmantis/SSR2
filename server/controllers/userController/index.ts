@@ -4,18 +4,17 @@ import UsersModel from "../../models/UsersModel";
 type UserControllerProps = {
   show: (req: Request, res: Response) => Promise<void>;
   update: (req: Request, res: Response) => Promise<void>;
-
 };
 
 const UserController: UserControllerProps = {
-  show: async (req: Request, res: Response): Promise<void> => {
+  show: async (req, res) => {
     const { db } = req.app.locals;
     const { id } = req.params;
-    const data = await UsersModel.findOne(db, id);
+    const data = await UsersModel.show(db, id);
 
     res.status(200).json({ data });
   },
-  update: async (req: Request, res: Response): Promise<void> => {
+  update: async (req, res) => {
     const { db } = req.app.locals;
     const { id } = req.params;
     const user = req.body

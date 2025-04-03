@@ -138,7 +138,8 @@ describe("User", () => {
   });
   it("will not update coordinates if the zip code is the same", async () => {
     const updateUserNameNoZipCode = {
-      name: "",
+      id: "123",
+      name: "some name",
       zipCode: 11111,
       latitude: "34.0522",
       longitude: "-118.2437",
@@ -158,6 +159,11 @@ describe("User", () => {
       }),
     });
 
+    mockFetch.mockResolvedValueOnce({
+      json: async () => ({
+        data: updateUserNameNoZipCode,
+      }),
+    });
     await act(async () => render(<User />));
 
     const mockChildButton = screen.getByTestId("submitButton");

@@ -9,7 +9,7 @@ type HomeControllerType = {
 }
 
 const HomeController: HomeControllerType = {
-    show: async (_req: Request, res: Response): Promise<void> => {
+    show: async (_req, res) => {
         const data: Payload = {
             data: "Hello World"
         }

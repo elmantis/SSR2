@@ -5,7 +5,7 @@ import { apiRoutes } from '../utils/routes'
 const router = Router()
 
 router
-  .route(apiRoutes?.home?.show)
+  .route(apiRoutes?.home)
   .get(HomeController.show)
 
 export default router
