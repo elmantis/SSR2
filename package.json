@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test:server": "jest --config jest.config.js",
     "test:react": "jest --config jest.config.ui.js",
-    "test": "jest"
+    "test": "concurrently \"npm run test:server\" \"npm run test:react\""
   },
   "author": "",
   "license": "ISC",
